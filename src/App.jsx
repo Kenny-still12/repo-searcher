@@ -1,3 +1,4 @@
+import Header from "./Header.jsx";
 import Result from "./Result.jsx"
 import { useState } from "react"
 
@@ -31,6 +32,7 @@ export default function App() {
 
   return (
     <>
+      <Header />
       <div className="form-container">
         <form
           className="form"
