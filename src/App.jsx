@@ -6,6 +6,7 @@ export default function App() {
 
   const [userName, setUserName] = useState("");
   const [userData, setUserData] = useState(null);
+  const [repos, setRepos] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("")
 
@@ -20,9 +21,16 @@ export default function App() {
     setLoading(true)
 
     try {
-      const response = await fetch(`https://api.github.com/users/${userName}`);
-      const data = await response.json();
-      setUserData(data)
+      const [userResponse, repoResponse] = await Promise.all([
+        fetch(`https://api.github.com/users/${userName}`),
+        fetch(`https://api.github.com/users/${userName}/repos`)
+      ]);
+
+      const user = await userResponse.json();
+      const repositories = await repoResponse.json();
+
+      setUserData(user)
+      setRepos(repositories)
     } catch (err) {
       setError("Something went Wrong!")
     } finally {
@@ -49,7 +57,7 @@ export default function App() {
         </form>
       </div>
 
-      <Result loading={loading} userData={userData} temporaryButton={temporaryButton} />
+      <Result loading={loading} userData={userData} repos={repos} temporaryButton={temporaryButton} />
     </>
   )
 

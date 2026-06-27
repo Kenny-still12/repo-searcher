@@ -1,4 +1,4 @@
-export default function Result({ loading, userData, temporaryButton }) {
+export default function Result({ loading, userData, temporaryButton, repos }) {
 
     if (loading) {
         return (
@@ -25,7 +25,13 @@ export default function Result({ loading, userData, temporaryButton }) {
                     <img src={userData.avatar_url} alt="" />
                 </div>
                 <p className="bio">{userData.bio}</p>
-                <p>{userData.repos_url}</p>
+                <h2>Repositories</h2>
+
+                <ul>
+                    {repos.map(repo => (
+                        <a href={repo.html_url}><li key={repo.id}>{repo.name}</li></a>
+                    ))}
+                </ul>
             </div>
         </>
     )
