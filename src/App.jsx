@@ -1,6 +1,6 @@
 import Header from "./Header.jsx";
 import Result from "./Result.jsx"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 export default function App() {
 
@@ -11,13 +11,16 @@ export default function App() {
   const [error, setError] = useState("")
 
   function handleChange(event) {
-    event.preventDefault();
     const { value } = event.currentTarget;
     setUserName(value);
     console.log(userName)
   }
 
-  async function temporaryButton() {
+  function temporaryButton() {
+    fetchUser()
+  }
+
+  async function fetchUser() {
     setLoading(true)
 
     try {
@@ -37,6 +40,12 @@ export default function App() {
       setLoading(false);
     }
   }
+
+  useEffect(() => {
+    if (!userName) return;
+
+    fetchUser()
+  }, [userName])
 
   return (
     <>
