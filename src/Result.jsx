@@ -28,7 +28,7 @@ export default function Result({ loading, userData, temporaryButton, repos }) {
                 <h2>Repositories</h2>
 
                 <ul>
-                    {repos.map(repo => (
+                    {repos && repos.map(repo => (
                         <a href={repo.html_url}><li key={repo.id}>{repo.name}</li></a>
                     ))}
                 </ul>

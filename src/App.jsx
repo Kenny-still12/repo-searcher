@@ -29,6 +29,12 @@ export default function App() {
         fetch(`https://api.github.com/users/${userName}/repos`)
       ]);
 
+      if (!userResponse.ok || !repoResponse.ok) {
+        setUserData(null)
+        setRepos([])
+        return
+      }
+
       const user = await userResponse.json();
       const repositories = await repoResponse.json();
 
@@ -42,9 +48,16 @@ export default function App() {
   }
 
   useEffect(() => {
+    console.log("useEffect fired up!")
     if (!userName) return;
 
-    fetchUser()
+    const limitSearch = setTimeout(() => {
+      console.log("Time Out!")
+      fetchUser()
+    }, 500);
+
+    return () => clearTimeout(limitSearch)
+
   }, [userName])
 
   return (
